@@ -184,14 +184,14 @@ example(of: "Single") {
     }
     
     loadText(from: "Copyright1")
-//        .subscribe {
-//            switch $0 {
-//            case .success(let string):
-//                print(string)
-//            case .error(let error):
-//                print(error)
-//            }
-//        }
+        //        .subscribe {
+        //            switch $0 {
+        //            case .success(let string):
+        //                print(string)
+        //            case .error(let error):
+        //                print(error)
+        //            }
+        //        }
         .subscribe(onSuccess: { print($0) }, onError: { print($0) })
         .disposed(by: disposeBag)
 }
@@ -239,6 +239,83 @@ example(of: "PublishSubject") {
         })
     subject.on(.next("1"))
     subject.onNext("2")
+    let subscriptionTwo = subject
+        .subscribe({ event in
+            print("2)", event.element ?? event)
+        })
+    subject.onNext("3")
+    subscriptionOne.dispose()
+    subject.onNext("4")
+    // 1
+    subject.onCompleted()
+    // 2
+    subject.onNext("5")
+    // 3
+    subscriptionTwo.dispose()
+    let disposeBag = DisposeBag()
+    // 4
+    subject
+        .subscribe {
+            print("3)", $0.element ?? $0)
+        }
+        .disposed(by: disposeBag)
+    subject.onNext("?")
+}
+
+enum MyError: Error {
+    case anError
+}
+
+func print<T: CustomStringConvertible>(label: String, event: Event<T>) {
+    print(label, event.element ?? event.error ?? event)
+}
+
+example(of: "BehaviorSubject") {
+    let subject = BehaviorSubject(value: "Initial value")
+    subject.onNext("X")
+    let disposeBag = DisposeBag()
+    subject
+        .subscribe {
+            print(label: "1)", event: $0)
+        }
+        .disposed(by: disposeBag)
+    // 1
+    subject.onError(MyError.anError)
+    // 2
+    subject
+        .subscribe {
+            print(label: "2)", event: $0)
+        }
+        .disposed(by: disposeBag)
+}
+
+example(of: "ReplaySubject") {
+    // 1
+    let subject = ReplaySubject<String>.create(bufferSize: 2)
+    let disposeBag = DisposeBag()
+    // 2
+    subject.onNext("1")
+    subject.onNext("2")
+    subject.onNext("3")
+    // 3
+    subject
+        .subscribe {
+            print(label: "1)", event: $0)
+        }
+        .disposed(by: disposeBag)
+    subject
+        .subscribe {
+            print(label: "2)", event: $0)
+        }
+        .disposed(by: disposeBag)
+    subject.onNext("4")
+    subject.onError(MyError.anError)
+//    subject.dispose()
+    subject
+        .subscribe {
+            print(label: "3)", event: $0)
+        }
+        .disposed(by: disposeBag)
 }
 
 
