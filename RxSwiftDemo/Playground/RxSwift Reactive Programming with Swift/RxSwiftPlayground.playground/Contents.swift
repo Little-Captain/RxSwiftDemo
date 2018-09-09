@@ -310,7 +310,7 @@ example(of: "ReplaySubject") {
         .disposed(by: disposeBag)
     subject.onNext("4")
     subject.onError(MyError.anError)
-//    subject.dispose()
+    //    subject.dispose()
     subject
         .subscribe {
             print(label: "3)", event: $0)
@@ -318,7 +318,28 @@ example(of: "ReplaySubject") {
         .disposed(by: disposeBag)
 }
 
-
+example(of: "Variable") {
+    // 1
+    let varibale = Variable("Initial value")
+    let disposeBag = DisposeBag()
+    // 2
+    varibale.value = "New initial value"
+    // 3
+    varibale.asObservable()
+        .subscribe {
+            print(label: "1)", event: $0)
+        }
+        .disposed(by: disposeBag)
+    
+    // 1
+    varibale.value = "1"
+    varibale.asObservable()
+        .subscribe {
+            print(label: "2)", event: $0)
+    }
+        .disposed(by: disposeBag)
+    varibale.value = "2"
+}
 
 
 
