@@ -136,11 +136,15 @@ example(of: "Create a blackjack card dealer using a publish subject") {
         }
         
         // Add code to update dealtHand here
-        
+        dealtHand.onNext(hand)
     }
     
     // Add subscription to dealtHand here
-    
+    dealtHand
+        .subscribe {
+            print(label: "Challenge 1)", event: $0)
+        }
+        .disposed(by: disposeBag)
     
     deal(3)
 }
