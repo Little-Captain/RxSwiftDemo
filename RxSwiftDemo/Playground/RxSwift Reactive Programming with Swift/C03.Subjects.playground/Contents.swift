@@ -136,14 +136,23 @@ example(of: "Create a blackjack card dealer using a publish subject") {
         }
         
         // Add code to update dealtHand here
-        dealtHand.onNext(hand)
+        if points(for: hand) > 21 {
+            dealtHand.onError(HandError.busted)
+        } else {
+            dealtHand.onNext(hand)
+        }
+        
     }
     
     // Add subscription to dealtHand here
     dealtHand
-        .subscribe {
-            print(label: "Challenge 1)", event: $0)
-        }
+        .subscribe(
+            onNext: {
+                print(cardString(for: $0), "for", points(for: $0), "points")
+        },
+            onError: {
+                print(String(describing: $0).capitalized)
+        })
         .disposed(by: disposeBag)
     
     deal(3)
@@ -152,21 +161,24 @@ example(of: "Create a blackjack card dealer using a publish subject") {
 example(of: "Observe and check user session state using a variable") {
     
     enum UserSession {
-        
         case loggedIn, loggedOut
     }
     
     enum LoginError: Error {
-        
         case invalidCredentials
     }
     
     let disposeBag = DisposeBag()
     
     // Create userSession Variable of type UserSession with initial value of .loggedOut
-    
+    let userSession: Variable<UserSession> = Variable(.loggedOut)
     
     // Subscribe to receive next events from userSession
+    userSession.asObservable()
+        .subscribe(onNext: {
+            print($0)
+        })
+        .disposed(by: disposeBag)
     
     
     func logInWith(username: String, password: String, completion: (Error?) -> Void) {
@@ -178,17 +190,19 @@ example(of: "Observe and check user session state using a variable") {
         }
         
         // Update userSession
-        
+        completion(nil)
+        userSession.value = .loggedIn
     }
     
     func logOut() {
         // Update userSession
-        
+        userSession.value = .loggedOut
     }
     
     func performActionRequiringLoggedInUser(_ action: () -> Void) {
         // Ensure that userSession is loggedIn and then execute action()
-        
+        guard userSession.value == .loggedIn else { return }
+        action()
     }
     
     for i in 1...2 {
