@@ -45,10 +45,12 @@ enum MyError: Error {
 func print<T: CustomStringConvertible>(label: String, event: Event<T>) {
     print(label, event.element ?? event.error ?? event)
 }
-
+// BehaviorSubject
+// 发送最新的事件给新订阅者: .next, .completed, .error
 example(of: "BehaviorSubject") {
     let subject = BehaviorSubject(value: "Initial value")
     subject.onNext("X")
+    subject.onNext("Y")
     let disposeBag = DisposeBag()
     subject
         .subscribe {
@@ -56,7 +58,8 @@ example(of: "BehaviorSubject") {
         }
         .disposed(by: disposeBag)
     // 1
-    subject.onError(MyError.anError)
+//    subject.onError(MyError.anError)
+    subject.onCompleted()
     // 2
     subject
         .subscribe {
@@ -65,6 +68,9 @@ example(of: "BehaviorSubject") {
         .disposed(by: disposeBag)
 }
 
+// ReplaySubject
+// 仅仅缓存非完成事件(.next)
+// 发送缓存的所有事件, 以及最后的完成事件(.completed, .error)给新订阅者
 example(of: "ReplaySubject") {
     // 1
     let subject = ReplaySubject<String>.create(bufferSize: 2)
