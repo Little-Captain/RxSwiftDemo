@@ -278,7 +278,47 @@ example(of: "switchLatest") {
     disposable.dispose()
 }
 
+//: reduce
+// When the source observable completes, reduce(_:_:) emits
+// the summary value, then completes.
+// 当 source observable 完成时, reduce(_:_:) 发出最后的结果, 然后完成
 
+// Note: reduce(_:_:) produces its summary (accumulated) value only
+// when the source observable completes. Applying this operator to
+// sequences that never complete won’t emit anything. This is a frequent
+// source of confusion and hidden problems.
+// 注意: reduce(_:_:) 只有当 Source observable 完成时发出最后结果, 然后完成
+// 将其应用在一个永远不会完成的序列上, 不会发出任何值.
+// 这是一个经常发生且不易发现的问题源头
+example(of: "reduce") {
+    let source = Observable.of(1, 3, 5, 7, 9)
+    let observable = source.reduce(0, accumulator: +)
+    observable.subscribe(onNext: { print($0) })
+}
+
+//: scan
+// A close relative to reduce(_:_:) is the scan(_:accumulator:) operator.
+// scan(_:accumulator:) 与 reduce(_:_:) 非常相似
+// You get one output value per input value.
+// 每一个输入值都会产生一个输出值
+example(of: "scan") {
+    let source = Observable.of(1, 3, 5, 7, 9)
+    let observable = source.scan(0, accumulator: +)
+    observable.subscribe(onNext: { print($0) })
+}
+
+example(of: "Challenge 1: solution using zip") {
+    let source = Observable.of(1, 3, 5, 7, 9)
+    let observable = source.scan(0, accumulator: +)
+    Observable.zip(source, observable)
+        .subscribe(onNext: { print($0) })
+}
+
+example(of: "Challenge 1: solution using just scan and a tuple") {
+    let source = Observable.of(1, 3, 5, 7, 9)
+    let observable = source.scan((0, 0)) { ($1, $0.1 + $1) }
+    observable.subscribe(onNext: { print($0) })
+}
 
 
 
