@@ -319,13 +319,3 @@ example(of: "Challenge 1: solution using just scan and a tuple") {
     let observable = source.scan((0, 0)) { ($1, $0.1 + $1) }
     observable.subscribe(onNext: { print($0) })
 }
-
-
-
-
-
-
-
-
-
-

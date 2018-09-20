@@ -34,7 +34,7 @@
 		95D571E41FF23F0A00B84F37 /* 09.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 09.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		95FB5AB01FF251C700D976CD /* 11.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 11.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		B960A65B2147DE28007AA888 /* C06.Sharing subscriptions.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "C06.Sharing subscriptions.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		B960A65C2147DE28007AA888 /* C05.Filtering Operators 2.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "C05.Filtering Operators 2.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		B9690B132153F8DA008E0EEF /* C05.Filtering Operators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "C05.Filtering Operators.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		B99D85A6214A8A9200B0EEF8 /* C08.share vs. shareReplay.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "C08.share vs. shareReplay.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		B9A47CE6215226FF000260C0 /* C09.Combining Operators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "C09.Combining Operators.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		B9A7B57E2149561C00410BC3 /* C07.Transforming Operators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = "C07.Transforming Operators.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -120,7 +120,7 @@
 			children = (
 				B9D8B94C2146781300180CB0 /* C02.Observables.playground */,
 				B9D8B94B2146781300180CB0 /* C03.Subjects.playground */,
-				B960A65C2147DE28007AA888 /* C05.Filtering Operators 2.playground */,
+				B9690B132153F8DA008E0EEF /* C05.Filtering Operators.playground */,
 				B960A65B2147DE28007AA888 /* C06.Sharing subscriptions.playground */,
 				B9A7B57E2149561C00410BC3 /* C07.Transforming Operators.playground */,
 				B99D85A6214A8A9200B0EEF8 /* C08.share vs. shareReplay.playground */,

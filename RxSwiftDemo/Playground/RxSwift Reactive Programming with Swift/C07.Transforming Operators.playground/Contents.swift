@@ -193,18 +193,3 @@ example(of: "Challenge 1") {
     
     input.value = "9"
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
